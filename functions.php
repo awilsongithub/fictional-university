@@ -1,8 +1,11 @@
-<!-- behind the scenes conversation with wp -->
+<!--
+	behind the scenes conversation with wp
+our custom functions to use in templates
+-->
 
 <?php
 
-function university_files()
+function load_files()
 {
     wp_enqueue_script('main-university-javascript', get_theme_file_uri('/js/scripts.bundled.js'), null, '1.0', true);
 
@@ -13,6 +16,14 @@ function university_files()
     wp_enqueue_style('university_main_styles', get_stylesheet_uri());
 }
 
-add_action('wp_enqueue_scripts', 'university_files');
+function university_features()
+{
+    add_theme_support('title-tag');
+}
+
+// register fn to this hook
+add_action('wp_enqueue_scripts', 'load_files');
+
+add_action('after_setup_theme', 'university_features');
 
 ?>
