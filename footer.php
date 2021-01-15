@@ -27,9 +27,9 @@
 					<h3 class="headline headline--small">Learn</h3>
 					<nav class="nav-list">
 						<ul>
-							<li><a href="#">Legal</a></li>
-							<li><a href="#">Privacy</a></li>
-							<li><a href="#">Careers</a></li>
+							<li><a href="<?php echo site_url('/legal'); ?>">Legal</a></li>
+							<li><a href="<?php echo site_url('/privacy'); ?>">Privacy</a></li>
+							<li><a href="<?php echo site_url('/careers'); ?>">Careers</a></li>
 						</ul>
 					</nav>
 				</div>

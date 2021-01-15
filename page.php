@@ -4,6 +4,7 @@ while (have_posts()) {
 	the_post(); // creates a namespace? 
 ?>
 
+	<!-- BANNER -->
 	<div class="page-banner">
 		<div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
 		</div>
@@ -17,30 +18,44 @@ while (have_posts()) {
 
 	<div class="container container--narrow page-section">
 
-		<!-- breadcrumbs  -->
+		<!-- CRUMBS  -->
 		<?php
-		$parentPageId   = wp_get_post_parent_id(get_the_ID());
-		$parentPageName = get_the_title($parentPageId);
-		$foo =      'bar';
-		if ($parentPageId) {
+		$parentPgId   = wp_get_post_parent_id(get_the_ID());
+		if ($parentPgId) {
 		?>
 			<div class="metabox metabox--position-up metabox--with-home-link">
 				<p>
-					<a class="metabox__blog-home-link" href="#"><i class="fa fa-home" aria-hidden="true"></i>
-						Back to <?php echo $parentPageName ?></a>
+					<a class="metabox__blog-home-link" href="<?php get_permalink(($parentPageId)) ?>"><i class="fa fa-home" aria-hidden="true"></i>
+						Back to <?php echo get_the_title($parentPgId) ?></a>
 					<span class="metabox__main"><?php the_title(); ?></span>
 				</p>
 			</div>
 		<?php } ?>
 
-		<!--
-	<div class="page-links">
-		<h2 class="page-links__title"><a href="#">About Us</a></h2>
-		<ul class="min-list">
-			<li class="current_page_item"><a href="#">Our History</a></li>
-			<li><a href="#">Our Goals</a></li>
-		</ul>
-	</div> -->
+		<!-- PAGE LINKS -->
+		<div class="page-links">
+			<!-- if on parent, the_title(), else echo get_the_title -->
+			<h2 class="page-links__title"><a href="#">About Us</a></h2>
+			<ul class="min-list">
+
+				<?php
+
+				if ($parentPgId) {
+					$findChildrenOf = $parentPgId;
+				} else {
+					$findChildrenOf = get_the_ID();
+				}
+
+				$pageListOptions = array(
+					'title_li' => NULL,
+					'child_of' => $findChildrenOf
+				);
+
+				wp_list_pages($pageListOptions);
+				?>
+
+			</ul>
+		</div>
 
 		<div class="generic-content">
 			<?php the_content(); ?>
