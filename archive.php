@@ -14,21 +14,10 @@ $curauth = (isset($_GET['author_name'])) ?
 	</div>
 	<div class="page-banner__content container container--narrow">
 		<h1 class="page-banner__title">
-			<?php
-			if (is_author()) {
-				echo 'Posts by ' . the_author();
-			}
-			if (is_category()) {
-				single_cat_title();
-			}
-			?>
+			<?php the_archive_title() ?>
 		</h1>
 		<div class="page-banner__intro">
-			<?php
-
-			echo phpinfo();
-			exit;
-			?>
+			<?php the_archive_description() ?>
 		</div>
 	</div>
 </div>
