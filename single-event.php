@@ -1,6 +1,6 @@
 <?php get_header();
 
-debugToConsole('using my utils');
+// custom wp_query? for posts of type event?
 
 while (have_posts()) {
 	the_post();
@@ -25,14 +25,12 @@ while (have_posts()) {
 		--------------------- -->
 		<div class="metabox metabox--position-up metabox--with-home-link">
 			<p>
-				<a class="metabox__blog-home-link" href="<?php echo site_url('/blog') ?>">
-					<i class="fa fa-home" aria-hidden="true"></i>
-					Back to blog home
+				<a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('event'); ?>">
+					<i class="fa fa-calendar" aria-hidden="true"></i>
+					&nbsp;&nbsp;Back to All Events
 				</a>
 				<span class="metabox__main">
-					Posted by <?php the_author_posts_link(); ?>
-					on <?php the_date('n-j-Y'); ?>
-					in <?php the_category($separator = ', '); ?>
+					<?php the_title(); ?>
 				</span>
 			</p>
 		</div>
