@@ -13,7 +13,9 @@
 
 <div class="full-width-split group">
 
-	<!-- LEFT COLUMN -->
+	<!-- ===========================
+						EVENTS
+	================================ -->
 
 	<div class="full-width-split__one">
 		<div class="full-width-split__inner">
@@ -50,17 +52,17 @@
 			wp_reset_postdata();
 			?>
 
-			<p class="t-center no-margin"><a href="<?php echo site_url('/events'); ?>" class="btn btn--blue">View All Events</a></p>
+			<p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event'); ?>" class="btn btn--blue">View All Events</a></p>
 		</div>
 	</div>
 
-	<!-- RIGHT COLUMN -->
+		<!-- ===========================
+								POSTS
+	================================ -->
 
 	<div class="full-width-split__two">
 		<div class="full-width-split__inner">
 			<h2 class="headline headline--small-plus t-center">From Our Blogs</h2>
-
-			<!-- CUSTOM QUERY -->
 
 			<?php
 			$homepagePosts = new WP_Query(array(
@@ -80,7 +82,7 @@
 							<a href="<?php the_permalink(); ?>"><?php the_title() ?></a>
 						</h5>
 						<p class="d-inline">
-							<?php echo wp_trim_words(get_the_content(), 18); ?>
+							<?php echo getExcerpt(get_post()); ?>
 							<a href="<?php the_permalink(); ?>" class="nu gray">Read more</a>
 						</p>
 					</div>
@@ -89,7 +91,7 @@
 			wp_reset_postdata();
 			?>
 
-			<p class="t-center no-margin"><a href="<?php echo site_url('/blog'); ?>" class="btn btn--yellow">View All Blog Posts</a></p>
+			<p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('posts'); ?>" class="btn btn--yellow">View All Blog Posts</a></p>
 		</div>
 	</div>
 </div>

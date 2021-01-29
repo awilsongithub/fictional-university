@@ -38,8 +38,8 @@ function isCurrentMenuItem($slug) {
 						<li <?php echo isCurrentMenuItem('programs') ?>>
 							<a href="<?php echo site_url('programs'); ?>">Programs</a>
 						</li>
-						<li <?php echo isCurrentMenuItem('events') ?>>
-							<a href="<?php echo site_url('events'); ?>">Events</a>
+						<li <?php if(get_post_type() == 'event') echo 'class="current-menu-item"' ?>>
+							<a href="<?php echo get_post_type_archive_link('event'); ?>">Events</a>
 						</li>
 						<li <?php echo isCurrentMenuItem('campuses') ?>>
 							<a href="<?php echo site_url('campuses'); ?>">Campuses</a>
