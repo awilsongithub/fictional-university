@@ -2,7 +2,7 @@
 
 <?php
 
-require 'js/utils/utils.php';
+require 'utils/utils.php';
 
 function load_files()
 {
@@ -28,6 +28,15 @@ function university_features()
 }
 add_action('after_setup_theme', 'university_features');
 
+function university_adjust_queries($q) {
 
+	if(!is_admin() AND is_post_type_archive('event') AND $q->is_main_query()) {
+		$q->set('order', 'ASC');
+		$q->set('meta_key', 'event_date');
+		$q->set('orderby', 'meta_value_num');
+		$q->set('meta_query', noPastEvents());
+	};
+};
+add_action('pre_get_posts', 'university_adjust_queries');
 
 ?>

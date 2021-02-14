@@ -1,8 +1,4 @@
-<?php
-$curauth = (isset($_GET['author_name'])) ?
-  get_user_by('slug', $author_name) :
-  get_userdata(intval($author));
-?>
+
 
 <?php get_header(); ?>
 
@@ -11,15 +7,25 @@ $curauth = (isset($_GET['author_name'])) ?
   <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
   </div>
   <div class="page-banner__content container container--narrow">
-    <h1 class="page-banner__title">All Events</h1>
+    <h1 class="page-banner__title">Past Events</h1>
+    <p>A recap of our past events</p>
   </div>
 </div>
 
 <div class="container container--narrow page-section">
 
   <!-- EVENTS -->
-  <?php while (have_posts()) {
-    the_post(); ?>
+  <?php
+			$pastEvents = new WP_Query(array(
+				'posts_per_page' => -1,
+				'post_type' => 'event',
+				'meta_key' => 'event_date',
+				'orderby' => 'meta_value_num',
+				'order' => 'ASC',
+				'meta_query' => onlyPastEvents()
+      )); ?>
+
+    <?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
 
     <div class="event-summary">
       <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
@@ -46,9 +52,9 @@ $curauth = (isset($_GET['author_name'])) ?
       </div>
     </div>
 
-  <?php }
-  echo paginate_links();
-  ?>
+    <?php endwhile; else : ?>
+      <p>No past events found.</p>
+    <?php endif; ?>
 
 </div>
 
