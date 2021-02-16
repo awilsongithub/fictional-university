@@ -2,26 +2,14 @@
 
 while (have_posts()) {
 	the_post(); // creates a namespace? 
+	pageBanner(array(
+		'title' => 'Args -> Title',
+		'subtitle' => null
+	));
 ?>
-
-	<!-- BANNER -->
-	<div class="page-banner">
-		<div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
-		</div>
-		<div class="page-banner__content container container--narrow">
-			<h1 class="page-banner__title"><?php the_title(); ?></h1>
-			<div class="page-banner__intro">
-				<p>DONT FORGET TO REPLACE ME LATER....</p>
-			</div>
-		</div>
-	</div>
 
 	<div class="container container--narrow page-section">
 
-		<!-- IF PARENT, SHOW BREADCRUMBS 
-		how to know if has child
-		gettheId getpostchildid?
-	-->
 		<?php
 		$parentId   = wp_get_post_parent_id(get_the_ID());
 		if ($parentId) {

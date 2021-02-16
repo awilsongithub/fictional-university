@@ -50,6 +50,9 @@ $curauth = (isset($_GET['author_name'])) ?
   echo paginate_links();
   ?>
 
+  <a href="<?php echo site_url('/past-events'); ?>" style="padding-left:20px;" class="nu gray">View Past Events</a>
+  
+
 </div>
 
 <?php get_footer(); ?>

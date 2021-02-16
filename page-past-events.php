@@ -2,7 +2,10 @@
 
 <?php get_header(); ?>
 
-<!-- BANNER -->
+<!-- BANNER 
+  dynamic with acf field group: img, title, subtitle
+  query meta_key='page', meta_query key= page, compare == , value="name of this page"
+-->
 <div class="page-banner">
   <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
   </div>
@@ -17,7 +20,7 @@
   <!-- EVENTS -->
   <?php
 			$pastEvents = new WP_Query(array(
-				'posts_per_page' => -1,
+				'posts_per_page' => 1,
 				'post_type' => 'event',
 				'meta_key' => 'event_date',
 				'orderby' => 'meta_value_num',
@@ -25,7 +28,7 @@
 				'meta_query' => onlyPastEvents()
       )); ?>
 
-    <?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
+    <?php if( $pastEvents->have_posts() ) : while( $pastEvents->have_posts() ) : $pastEvents->the_post(); ?>
 
     <div class="event-summary">
       <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
@@ -46,7 +49,7 @@
           </a>
         </h5>
         <p class="d-inline">
-          <?php echo wp_trim_words(get_the_content(), 18); ?>
+          <?php echo getExcerpt(get_post()); ?>
           <a href="<?php the_permalink(); ?>" class="nu gray"> Learn more</a>
         </p>
       </div>
@@ -55,6 +58,8 @@
     <?php endwhile; else : ?>
       <p>No past events found.</p>
     <?php endif; ?>
+
+    <?php echo paginate_links(); ?>
 
 </div>
 
