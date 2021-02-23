@@ -1,57 +1,22 @@
 <?php
-$curauth = (isset($_GET['author_name'])) ?
-  get_user_by('slug', $author_name) :
-  get_userdata(intval($author));
+get_header();
+pageBanner(array(
+  'title' => 'All Events',
+  'subtitle' => 'See what is going on in our world'
+));
 ?>
-
-<?php get_header(); ?>
-
-<!-- BANNER -->
-<div class="page-banner">
-  <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
-  </div>
-  <div class="page-banner__content container container--narrow">
-    <h1 class="page-banner__title">All Events</h1>
-  </div>
-</div>
 
 <div class="container container--narrow page-section">
 
-  <!-- EVENTS -->
-  <?php while (have_posts()) {
-    the_post(); ?>
-
-    <div class="event-summary">
-      <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-        <span class="event-summary__month">
-          <?php
-          $eventDate = new DateTime(get_field('event_date'));
-          echo $eventDate->format('M');
-          ?>
-        </span>
-        <span class="event-summary__day">
-          <?php echo $eventDate->format('d'); ?>
-        </span>
-      </a>
-      <div class="event-summary__content">
-        <h5 class="event-summary__title headline headline--tiny">
-          <a href="<?php the_permalink(); ?>">
-            <?php the_title(); ?>
-          </a>
-        </h5>
-        <p class="d-inline">
-          <?php echo wp_trim_words(get_the_content(), 18); ?>
-          <a href="<?php the_permalink(); ?>" class="nu gray"> Learn more</a>
-        </p>
-      </div>
-    </div>
-
-  <?php }
+  <?php while (have_posts()) : the_post(); ?>
+    <?php getPostSnippetWithDate(); ?>
+  <?php endwhile;
   echo paginate_links();
   ?>
 
-  <a href="<?php echo site_url('/past-events'); ?>" style="padding-left:20px;" class="nu gray">View Past Events</a>
-  
+  <a href="<?php echo site_url('/past-events'); ?>" class="nu gray p-l-20">
+    View Past Events
+  </a>
 
 </div>
 

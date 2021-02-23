@@ -1,52 +1,33 @@
 <?php
-$curauth = (isset($_GET['author_name'])) ?
-	get_user_by('slug', $author_name) :
-	get_userdata(intval($author));
+get_header();
+pageBanner(array(
+	'title' => get_the_archive_title(),
+	'subtitle' => get_the_archive_description()
+));
 ?>
 
-<?php get_header(); ?>
-
-<!-- ---------------
-				BANNER 
--------------------- -->
-<div class="page-banner">
-	<div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);">
-	</div>
-	<div class="page-banner__content container container--narrow">
-		<h1 class="page-banner__title">
-			<?php the_archive_title() ?>
-		</h1>
-		<div class="page-banner__intro">
-			<?php the_archive_description() ?>
-		</div>
-	</div>
-</div>
-
-
 <div class="container container--narrow page-section">
-
-	<!-- ---------------
-					POSTS 
-	-------------------- -->
-	<?php while (have_posts()) {
-		the_post(); ?>
+	<?php while (have_posts()) : the_post();
+		$title = get_the_title();
+		$author = get_the_author_posts_link();
+		$date = get_the_date('n-j-Y'); 
+		$categories = get_the_category($separator = ', ');
+		$link =  get_the_permalink();
+	?>
 		<div class="post-item">
 			<h2 class="headline headline--medium headline--post-title">
-				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+				<a href="<?php echo $link ?>"><?php echo $title ?></a>
 			</h2>
 			<div class="metabox">
-				<p>Posted by <?php the_author_posts_link(); ?> on <?php the_date('n-j-Y'); ?> in <?php the_category($separator = ', '); ?></p>
+				<p>Posted by <?php echo $author ?> on <?php echo $date ?> in <?php echo $categories ?></p>
 			</div>
 			<div class="generic-content">
 				<?php the_excerpt(); ?>
-				<p><a class="btn btn--blue" href="<?php the_permalink(); ?>">Continue reading &raquo;</a></p>
+				<p><a class="btn btn--blue" href="<?php echo $link ?>">Continue reading &raquo;</a></p>
 			</div>
 		</div>
-
-	<?php }
-	echo paginate_links();
-	?>
-
+	<?php endwhile;
+	echo paginate_links(); ?>
 </div>
 
 <?php get_footer(); ?>

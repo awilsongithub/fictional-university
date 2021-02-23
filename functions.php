@@ -10,7 +10,7 @@ function load_files()
 	$fontAwesomeUrl = '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
 	$main_univ_js_local = 'http://localhost:3000/bundled.js';
 	$vendor_js = '/bundled-assets/vendors~scripts.8c97d901916ad616a264.js';
-	$main_univ_js = '/bundled-assets/scripts.24642e6049be0a6ef2e3.js';
+	$main_univ_js = '/bundled-assets/scripts.98f8049128e5d5928e8b.js';
 	$main_styles = 'bundled-assets/styles.css';
 
 	wp_enqueue_style('custom-google-fonts', $googleFontUrl);

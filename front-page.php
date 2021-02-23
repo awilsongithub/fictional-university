@@ -22,49 +22,20 @@
 			<h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
 
 			<?php
-
-			$homepageEvents = new WP_Query(array(
-				'posts_per_page' => -1,
-				'post_type' => 'event',
-				'meta_key' => 'event_date',
-				'orderby' => 'meta_value_num',
-				'order' => 'ASC',
-				'meta_query' => noPastEvents()
-			));
-
-			while ($homepageEvents->have_posts()) {
-				$homepageEvents->the_post();
+			$homepageEvents = getHomePageEvents();
+			while ($homepageEvents->have_posts()) : $homepageEvents->the_post();
+				$archive_link = get_post_type_archive_link('event');
 			?>
-				<div class="event-summary">
-					<a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-						<span class="event-summary__month">
-							<?php
-							$eventDate = new DateTime(get_field('event_date'));
-							echo $eventDate->format('M');
-							?>
-						</span>
-						<span class="event-summary__day">
-							<?php echo $eventDate->format('d'); ?>
-						</span>
-					</a>
-					<div class="event-summary__content">
-						<h5 class="event-summary__title headline headline--tiny">
-							<a href="<?php the_permalink(); ?>">
-								<?php the_title(); ?>
-							</a>
-						</h5>
-						<p class="d-inline">
-							<?php echo getExcerpt(get_post()); ?>
-							<a href="<?php the_permalink(); ?>" class="nu gray"> Learn more</a>
-						</p>
-					</div>
-				</div>
-
-			<?php }
+				<?php getPostSnippetWithDate(); ?>
+			<?php endwhile;
 			wp_reset_postdata();
 			?>
 
-			<p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event'); ?>" class="btn btn--blue">View All Events</a></p>
+			<p class="t-center no-margin">
+				<a href="<?php echo $archive_link; ?>" class="btn btn--blue">
+					View All Events
+				</a>
+			</p>
 		</div>
 	</div>
 
@@ -80,10 +51,11 @@
 			$homepagePosts = new WP_Query(array(
 				'posts_per_page' => 3,
 			));
-			// LOOP
-			while ($homepagePosts->have_posts()) {
-				$homepagePosts->the_post(); ?>
-				<!-- LOOP CONTENTS -->
+			while ($homepagePosts->have_posts()) : the_post();
+				getPostSnippetWithDate();
+			?>
+
+
 				<div class="event-summary">
 					<a class="event-summary__date event-summary__date--beige t-center" href="<?php the_permalink(); ?>">
 						<span class="event-summary__month"><?php the_time("M") ?></span>
@@ -99,7 +71,8 @@
 						</p>
 					</div>
 				</div>
-			<?php }
+
+			<?php endwhile;
 			wp_reset_postdata();
 			?>
 
